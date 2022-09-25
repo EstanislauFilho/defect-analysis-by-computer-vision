@@ -2,3 +2,5 @@
 *.csv
 *.json
 *.hdf5
+
+__pycache__/
