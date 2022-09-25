@@ -3,10 +3,11 @@ import cv2
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import tensorflow as tf
 import matplotlib.pyplot as plt
 
 from skimage import io
+from libraries import etl
+from settings import setup
 from tensorflow.keras import layers, optimizers
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.models import Model, load_model
@@ -21,7 +22,7 @@ class Main:
         pass
 
     def main(self):
-        pass
+        dataset = etl.load_dataset(setup.DATASET_PATH)
 
 if __name__ == "__main__":
     run = Main()
