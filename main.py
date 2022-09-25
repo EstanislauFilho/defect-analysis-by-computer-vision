@@ -24,6 +24,13 @@ class Main:
     def main(self):
         dataset = etl.load_dataset(setup.DATASET_PATH)
 
+        defective_steel_plates_dataset = etl.load_dataset(setup.DATASET_DEFECT_TRAIN)
+
+        quantity_defective_steel_plates = \
+            (defective_steel_plates_dataset.shape[0] / dataset.shape[0]) * 100
+            
+        print(quantity_defective_steel_plates)
+
 if __name__ == "__main__":
     run = Main()
     run.main()
