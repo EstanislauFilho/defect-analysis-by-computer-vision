@@ -16,6 +16,15 @@ from tensorflow.keras.layers import Dense, Input, AveragePooling2D, Flatten, \
                                     Activation, Add, UpSampling2D, Concatenate
 
 
+class Main:
+    def __init__(self) -> None:
+        pass
 
+    def main(self):
+        pass
+
+if __name__ == "__main__":
+    run = Main()
+    run.main()
 
 
