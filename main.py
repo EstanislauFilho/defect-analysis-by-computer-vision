@@ -27,8 +27,8 @@ class Main:
 
         defective_steel_plates_dataset = etl.load_dataset(setup.DATASET_DEFECT_TRAIN)
 
-        quantity_defective_steel_plates = \
-            (defective_steel_plates_dataset.shape[0] / steel_plates_dataset.shape[0]) * 100
+        # quantity_defective_steel_plates = \
+        #     (defective_steel_plates_dataset.shape[0] / steel_plates_dataset.shape[0]) * 100
             
         defective_steel_plates_summary = etl.count_of_defect_types_per_image(defective_steel_plates_dataset)
 
@@ -36,6 +36,8 @@ class Main:
 
         graphics.relationship_between_defects_and_no_defects(steel_plates_dataset, display=False)
         graphics.relationship_between_types_of_defects(defective_steel_plates_dataset, display=False)
+        graphics.count_of_defect_types_per_image(defective_steel_plates_summary, display=True)
+
 
 if __name__ == "__main__":
     run = Main()
