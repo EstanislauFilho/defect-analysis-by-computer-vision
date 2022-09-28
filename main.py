@@ -34,10 +34,16 @@ class Main:
 
         print(defective_steel_plates_summary)
 
-        graphics.relationship_between_defects_and_no_defects(steel_plates_dataset, display=False)
-        graphics.relationship_between_types_of_defects(defective_steel_plates_dataset, display=False)
-        graphics.count_of_defect_types_per_image(defective_steel_plates_summary, display=True)
+        # graphics.relationship_between_defects_and_no_defects(steel_plates_dataset, display=False)
+        # graphics.relationship_between_types_of_defects(defective_steel_plates_dataset, display=False)
+        # graphics.count_of_defect_types_per_image(defective_steel_plates_summary, display=True)
 
+        for i in range(2):
+            img = io.imread(os.path.join("./images/train_images/", defective_steel_plates_dataset['ImageId'][i]))
+            plt.figure()
+            plt.title(defective_steel_plates_dataset['ClassId'][i])
+            plt.imshow(img)
+            plt.show()
 
 if __name__ == "__main__":
     run = Main()
