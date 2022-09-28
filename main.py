@@ -39,24 +39,28 @@ class Main:
 
         # print(defective_steel_plates_dataset['EncodedPixels'])
 
-        img = io.imread(os.path.join("./images/train_images/", defective_steel_plates_dataset['ImageId'][20]))
         # função que cria uma macara com o mesmo tamanho da altura e largura da imagem
         # RUN LENGTH ENCODING (RLE) é uma técnica para compressão de dados que armazena 
         # sequências que contém dados consecutivos (combinação em um só valor)
         # Considerando que temos uma imagem com texto preto em fundo branco
         # Em uma image 800x600 tem se 480.000 valores e com o método RLE tem uma sequencia
         # bem reduzida o que ocupa menos espaço para armazenamento. 
+        img = io.imread(os.path.join("./images/train_images/", defective_steel_plates_dataset['ImageId'][20]))
         mask = image_functions.rle2mask(defective_steel_plates_dataset['EncodedPixels'][20], img.shape[0], img.shape[1])       
         plt.figure()
         plt.title(defective_steel_plates_dataset['ClassId'][20])
         plt.imshow(mask)
         plt.show()
 
+        # Converte a imagem para escala de cores RGB
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        # Nos pixels que foram identificados os defeitos, faz o preenchimento na cor verde
+        img[mask == 1,1] = 255
+        plt.figure()
+        plt.title(defective_steel_plates_dataset['ClassId'][20])
+        plt.imshow(img)
+        plt.show()
 
-            # plt.figure()
-            # plt.title(defective_steel_plates_dataset['ClassId'][i])
-            # plt.imshow(img)
-            # plt.show()
 
 if __name__ == "__main__":
     run = Main()
