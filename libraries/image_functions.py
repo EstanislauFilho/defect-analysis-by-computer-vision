@@ -1,16 +1,17 @@
 
-import pandas as pd
-import numpy as np
-import seaborn as sns
-import cv2
-import tensorflow as tf
 import os 
-from skimage import io
+import cv2
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import tensorflow as tf
+
 from PIL import Image
+from skimage import io
 from tensorflow.keras import backend as K
   
-#creating a custom datagenerator:
 
+#creating a custom datagenerator:
 class DataGenerator(tf.keras.utils.Sequence):
     def __init__(self, ids , list_class, list_rle, image_dir, batch_size = 16, img_h = 256, img_w = 256, shuffle = True):
         self.ids = ids
@@ -25,7 +26,6 @@ class DataGenerator(tf.keras.utils.Sequence):
 
     def __len__(self):
         'Get the number of batches per epoch'
-
         return int(np.floor(len(self.ids)) / self.batch_size)
 
     def __getitem__(self, index):
@@ -111,7 +111,6 @@ class DataGenerator(tf.keras.utils.Sequence):
 
         #normalizing y
         y = (y > 0).astype(int)
-
         return X, y
 
 
@@ -135,7 +134,6 @@ def rle2mask(rle, height, width):
     are taken as start point and the values belong to odd index likr 7,20 are the length. So we need to add length to the respective
     start pixels like 4954+7 and 5800+20, to the ending point. Now, we need to  apply mask '1' in pixles from 4954 to 4961 and 5800 to 5820.
     '''
-
     for i in range(len(start)):
         mask[int(start[i]):(int(start[i])+int(length[i]))] = 1
 
