@@ -5,13 +5,14 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from skimage import io
+
 from libraries import etl
 from settings import setup
 from libraries import graphics
 from libraries import image_functions
 from tensorflow.keras import layers, optimizers
 from tensorflow.keras.applications import ResNet50
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.layers import Dense, Input, AveragePooling2D, Flatten, \
@@ -31,11 +32,11 @@ class Main:
         # quantity_defective_steel_plates = \
         #     (defective_steel_plates_dataset.shape[0] / steel_plates_dataset.shape[0]) * 100
             
-        defect_type = etl.count_of_defect_types_per_image(defective_steel_plates_dataset)
+        defect_type_dataset = etl.count_of_defect_types_per_image(defective_steel_plates_dataset)
 
-        # graphics.relationship_between_defects_and_no_defects(steel_plates_dataset, display=False)
-        # graphics.relationship_between_types_of_defects(defective_steel_plates_dataset, display=False)
-        # graphics.count_of_defect_types_per_image(defective_steel_plates_summary, display=True)
+        graphics.relationship_between_defects_and_no_defects(steel_plates_dataset, display=False)
+        graphics.relationship_between_types_of_defects(defective_steel_plates_dataset, display=False)
+        graphics.count_of_defect_types_per_image(defect_type_dataset, display=False)
 
         # print(defective_steel_plates_dataset['EncodedPixels'])
 
@@ -45,12 +46,12 @@ class Main:
         # Considerando que temos uma imagem com texto preto em fundo branco
         # Em uma image 800x600 tem se 480.000 valores e com o método RLE tem uma sequencia
         # bem reduzida o que ocupa menos espaço para armazenamento. 
-        img = io.imread(os.path.join("./images/train_images/", defective_steel_plates_dataset['ImageId'][20]))
+        img = image_functions.load_image(dataset=defective_steel_plates_dataset, img_number=20)
         mask = image_functions.rle2mask(defective_steel_plates_dataset['EncodedPixels'][20], img.shape[0], img.shape[1])       
         plt.figure()
         plt.title(defective_steel_plates_dataset['ClassId'][20])
         plt.imshow(mask)
-        plt.show()
+        # plt.show()
 
         # Converte a imagem para escala de cores RGB
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -59,8 +60,9 @@ class Main:
         plt.figure()
         plt.title(defective_steel_plates_dataset['ClassId'][20])
         plt.imshow(img)
-        plt.show()
+        # plt.show()
 
+        train, test = train_test_split(steel_plates_dataset, test_size = 0.15)
 
 if __name__ == "__main__":
     run = Main()
