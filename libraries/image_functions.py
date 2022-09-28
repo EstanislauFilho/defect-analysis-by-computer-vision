@@ -297,3 +297,7 @@ def focal_tversky(y_true,y_pred):
     pt_1 = tversky(y_true, y_pred)
     gamma = 0.75
     return K.pow((1-pt_1), gamma)
+
+
+def load_image(dataset, img_number):
+    return io.imread(os.path.join("./images/train_images/", dataset['ImageId'][img_number]))

@@ -10,14 +10,7 @@ from libraries import etl
 from settings import setup
 from libraries import graphics
 from libraries import image_functions
-from tensorflow.keras import layers, optimizers
-from tensorflow.keras.applications import ResNet50
-from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Model, load_model
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from tensorflow.keras.layers import Dense, Input, AveragePooling2D, Flatten, \
-                                    Dropout, MaxPool2D, Conv2D, BatchNormalization, \
-                                    Activation, Add, UpSampling2D, Concatenate
+from libraries import neural_network as ann
 
 
 class Main:
@@ -62,7 +55,11 @@ class Main:
         plt.imshow(img)
         # plt.show()
 
-        train, test = train_test_split(steel_plates_dataset, test_size = 0.15)
+        train_dataset, test_dataset = ann.dataset_separation(steel_plates_dataset)
+
+        training_data, validation_data = ann.data_generation_for_training(train_dataset)
+        test_data = ann.data_generation_for_test(test_dataset)
+
 
 if __name__ == "__main__":
     run = Main()
