@@ -1,17 +1,19 @@
 import os
 import cv2
+import warnings
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-
 
 from libraries import etl
 from settings import setup
 from libraries import graphics
 from libraries import image_functions
 from libraries import neural_network as ann
+from sklearn.metrics import accuracy_score, classification_report
 
+warnings.filterwarnings('ignore')
 
 class Main:
     def __init__(self) -> None:
@@ -76,6 +78,11 @@ class Main:
             else:
                 predict.append(1)
         predict = np.asarray(predict)
+
+        original = np.asarray(test_dataset.label)
+        prec = accuracy_score(original, predict)
+        print(f"Precisão: {prec}")
+        print(classification_report(original, predict))
 
 if __name__ == "__main__":
     run = Main()
