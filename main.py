@@ -61,7 +61,21 @@ class Main:
         test_data = ann.data_generation_for_test(test_dataset)
 
         resnet_model = ann.load_model(model_path=setup.RESNET_MODEL_PATH,
-                                     weights_path=setup.RESNET_WEIGHTS_PATH)
+                                      weights_path=setup.RESNET_WEIGHTS_PATH)
+
+        # gera as probabilidades de pertencimento as classes,
+        # com valores entre zero e um
+        test_predict = resnet_model.predict(test_data, verbose=True)
+
+        predict = []
+        for i in test_predict:
+            # Somente o que ele tem 99% de certeza que é
+            # uma peça com defeito, ele irá classificar como tal
+            if i < 0.01:
+                predict.append(0)
+            else:
+                predict.append(1)
+        predict = np.asarray(predict)
 
 if __name__ == "__main__":
     run = Main()
