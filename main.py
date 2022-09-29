@@ -60,6 +60,8 @@ class Main:
         training_data, validation_data = ann.data_generation_for_training(train_dataset)
         test_data = ann.data_generation_for_test(test_dataset)
 
+        resnet_model = ann.load_model(model_path=setup.RESNET_MODEL_PATH,
+                                     weights_path=setup.RESNET_WEIGHTS_PATH)
 
 if __name__ == "__main__":
     run = Main()
