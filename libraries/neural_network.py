@@ -1,5 +1,5 @@
 
-
+import tensorflow as tf
 from tensorflow.keras import layers, optimizers
 from tensorflow.keras.applications import ResNet50
 from sklearn.model_selection import train_test_split
@@ -108,3 +108,11 @@ def training(train_dataset, validation_dataset):
     model_json = model.to_json()
     with open("resnet-classifier-model.json","w") as json_file:
         json_file.write(model_json)
+
+def load_model(model_path, weights_path):
+    with open(model_path, "r") as json_file:
+        json_model = json_file.read()
+    model = tf.keras.models.model_from_json(json_model)
+    model.load_weights(weights_path)
+    model.compile(loss='binary_crossentropy', optimizer='Nadam', metrics=['accuracy'])
+    return model
