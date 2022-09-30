@@ -35,7 +35,6 @@ def data_generation_for_training(dataset):
                                                   subset = 'training', batch_size = 16,
                                                   shuffle = True, class_mode = 'other',
                                                   target_size = (256,256))
-
     validation_generator = datagen.flow_from_dataframe(dataframe=dataset, 
                                                   directory="./images/train_images/",
                                                   x_col = 'ImageID', y_col = 'label',
