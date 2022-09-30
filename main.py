@@ -81,6 +81,7 @@ class Main:
 
         original = np.asarray(test_dataset.label)
         prec = accuracy_score(original, predict)
+        
         print(f"Precisão: {prec}")
         print(classification_report(original, predict))
 
